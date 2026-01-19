@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercice Wikidata</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+
+  <h1>Artistes de l'Académie Julian</h1>
+  
+  <div id="vis"></div>
+
+  <hr>
+
+  <h2>Visualisation RAWGraphs</h2>
+  <img src="viz.png">
+
+  <script>
+    const maSource = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {"url": "query.csv"}, 
+      "mark": "bar",
+      "encoding": {
+        "x": {"field": "workCount", "type": "quantitative", "aggregate": "max", "title": "Nombre d'oeuvres"},
+        "y": {"field": "art_of_paintingLabel", "type": "nominal", "sort": "-x", "title": "Artiste"}
+      }
+    };
+    vegaEmbed('#vis', maSource);
+  </script>
+
+</body>
+</html>

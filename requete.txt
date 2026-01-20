@@ -1,0 +1,28 @@
+#defaultView:TableGrid
+SELECT
+  ?art_of_paintingLabel
+  ?date_of_birth 
+  ?movementLabel
+  ?image 
+  ?place_of_birthLabel
+  (COUNT(?work) AS ?workCount)
+
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+  ?art_of_painting wdt:P101 wd:Q11629;
+    wdt:P69 wd:Q2746779.
+  
+  OPTIONAL { ?art_of_painting wdt:P18 ?image. }
+  OPTIONAL { ?art_of_painting wdt:P569 ?date_of_birth. }
+  OPTIONAL { ?art_of_painting wdt:P19 ?place_of_birth. }
+  OPTIONAL { ?art_of_painting wdt:P135 ?movement. }
+  OPTIONAL { ?work wdt:P170 ?art_of_painting. }
+}
+GROUP BY 
+  ?art_of_paintingLabel 
+  ?date_of_birth 
+  ?movementLabel 
+  ?image 
+  ?place_of_birthLabel
+ORDER BY DESC(?workCount)
+LIMIT 100
